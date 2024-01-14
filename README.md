@@ -104,15 +104,31 @@ float v[][3] = {...};  // Vertex
 
 ## transfer data use PBO
 ```c++
+                        zhelper::GL3::GpuBufferImage gpuMem1;
+                        zhelper::GL3::GpuImage2D gpuMem2;
+                        zhelper::GL3::GpuFBODevice<> dev;
+                        zhelper::GL2::GpuPixelBufferReadable gpuPBORd;
+                        zhelper::GL2::GpuPixelBufferDrawable gpuPBODw;
+                         {
+                                gpuPBODw.ensure();
+                                gpuPBODw.alloc(texSize * texSize * sizeof(float), GL_STATIC_DRAW);
+                                float* cpu_vaddr = gpuPBODw.mmap();
+                                for (int i = 0; i < texSize * texSize; ++i)
+                                     cpu_vaddr[i] = cpu_restore_space[i];
+                                gpuPBODw.unmap();
+                                gpuMem1.copyFromGpuPixelBufferDrawable(0, 0, texSize, h + 1, GL_RED, GL_FLOAT, 0);
+                                gpuPBODw.leave();
+                        }
+                        {
                                 gpuPBORd.ensure();
                                 gpuPBORd.alloc(texSize * texSize * sizeof(float), GL_STATIC_DRAW);
                                 gpuMem2.copyToGpuPixelBufferReadable(0, 0, texSize, h + 1, GL_RED, GL_FLOAT, 0);
-                                //gpuPBORd.copyTo(0, shdayC.size() * sizeof(shdayC.front()), readbuf.data() + 3*shdayC.size());
                                 float* cpu_vaddr = gpuPBORd.mmap();
                                 for (int i = 0; i < texSize * texSize; ++i)
                                      cpu_restore_space[i] = cpu_vaddr[i];
                                 gpuPBORd.unmap();
                                 gpuPBORd.leave();
+                        }
 ```
 
 ## GL3 gpgpu and transfer data use Texture
