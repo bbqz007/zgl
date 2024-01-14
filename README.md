@@ -21,8 +21,9 @@ simplify coding transfer between cpu memory and gpu memory.
 * gpu memory
   * memory buffer in gpu host side
   * such as
-    * Array Buffer (VBO), wrapped as `GpuBuffer`
-    * Texture, wrapped as `GpuImage`
+    * Array Buffer (VBO), wrapped as `GpuBuffer`.
+    * Pixel Pack Buffer (PBO), readable or drawable to cpu.
+    * Texture, wrapped as `GpuImage`.
   * interface
     * a couplue callings of `ensure()` and `leave()` for every usage
     * `alloc()` to allocate space in gpu memories
@@ -78,7 +79,7 @@ float v[][3] = {...};  // Vertex
             cpu.disconnectColor().disconnectVertex();
 ```
 
-## GL2 use Gpu Buffer
+## GL2 use Gpu Buffer (VBO)
 ```c++
      float v[][3] = {...};  // Vertex
      float c[][3] = {...};  // Color
@@ -101,7 +102,20 @@ float v[][3] = {...};  // Vertex
              cpu.disconnectColor().disconnectVertex().disconnectTexCoord();
 ```
 
-## GL3
+## transfer data use PBO
+```c++
+                                gpuPBORd.ensure();
+                                gpuPBORd.alloc(texSize * texSize * sizeof(float), GL_STATIC_DRAW);
+                                gpuMem2.copyToGpuPixelBufferReadable(0, 0, texSize, h + 1, GL_RED, GL_FLOAT, 0);
+                                //gpuPBORd.copyTo(0, shdayC.size() * sizeof(shdayC.front()), readbuf.data() + 3*shdayC.size());
+                                float* cpu_vaddr = gpuPBORd.mmap();
+                                for (int i = 0; i < texSize * texSize; ++i)
+                                     cpu_restore_space[i] = cpu_vaddr[i];
+                                gpuPBORd.unmap();
+                                gpuPBORd.leave();
+```
+
+## GL3 gpgpu and transfer data use Texture
 ```c++
                         zhelper::GL3::GpuBufferImage gpuMem1;
                         zhelper::GL3::GpuImage2D gpuMem2;
