@@ -5,8 +5,9 @@ simplify coding transfer between cpu memory and gpu memory.
 
 # purpose
 * GL2 - fixed pipeline rendering
+  * VBO wrapped as `GpuBuffer` as input source.
 * GL3 - gpgpu
-  * `GpuImage` as input or output, FBO device bind the two. 
+  * `Texture` wrapped as `GpuImage` as input source or output sink, FBO device bind the two. 
 
 # concept
 * device
@@ -20,10 +21,14 @@ simplify coding transfer between cpu memory and gpu memory.
 * gpu memory
   * memory buffer in gpu host side
   * such as
-    * Texture and Array Buffer (VBO), PBO
-    * wrapped as
-      * GpuImage
-      * GpuBuffer 
+    * Array Buffer (VBO), wrapped as `GpuBuffer`
+    * Texture, wrapped as `GpuImage`
+  * interface
+    * a couplue callings of `ensure()` and `leave()` for every usage
+    * `alloc()` to allocate space in gpu memories
+    * `copyTo()`, copy data to cpu host side memories 
+    * `copy()`, copy data from cpu host side memories
+    * specially, VBO has `mmap()` and `unmmap()`
 
 # classes
 * GL2
