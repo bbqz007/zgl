@@ -6,9 +6,11 @@ simplify coding transfer between cpu memory and gpu memory.
 # purpose
 * GL2 - fixed pipeline rendering
   * VBO wrapped as `GpuBuffer` as input source.
-* GL3 - gpgpu
-  * `Texture` wrapped as `GpuImage` as input source or output sink, FBO device bind the two. 
-
+* GL3 - gpgpu (Vertex-Fragment)
+  * `Texture` wrapped as `GpuImage` as input source or output sink, FBO device bind the two.
+* GL4 - gpgpu (Compute)
+  * `Texture` wrapped as `GpuImage` as input source or output sink, FBO device bind the two.
+  
 # concept
 * device
   * streaming input data port
