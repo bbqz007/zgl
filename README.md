@@ -32,6 +32,9 @@ simplify coding transfer between cpu memory and gpu memory.
     * `copyTo()`, copy data to cpu host side memories 
     * `copy()`, copy data from cpu host side memories
     * specially, VBO has `mmap()` and `unmmap()`
+* output sink
+  * GL2, can only output to Rendering buffers, such as GL_FRONT or GL_BACK
+  * GL3 or later, can output ot Texture by FBO.  
 
 # classes
 * GL2
