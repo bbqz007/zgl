@@ -167,3 +167,9 @@ float v[][3] = {...};  // Vertex
                             gpuMem2.copyToCpuMemory(0, 0, texSize, h + 1, GL_RED, GL_FLOAT, readbuf.data() + 2*shdayC.size());
                             
 ```
+### attentions
+* In my cases, frag-shader always has much better perf than compute-shader.
+  * GPT says 
+    * In certain cases, it's possible for a fragment shader to outperform a compute shader, especially if the computation aligns well with the graphics pipeline and benefits from its parallel nature. Fragment shaders are traditionally designed for pixel-level processing, and they can take advantage of the parallel processing capabilities of GPUs.
+    * Compute shaders are designed for general-purpose computing (GPGPU) and can excel in scenarios where the computation doesn't neatly fit into the graphics pipeline.
+    * If a fragment shader is performing better in your specific case, it suggests that the workload might be well-suited for the parallelism and optimizations provided by the graphics pipeline. It's always recommended to profile and benchmark different approaches to understand their performance characteristics on the specific hardware and workload at hand.
