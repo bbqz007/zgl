@@ -33,8 +33,9 @@ simplify coding transfer between cpu memory and gpu memory.
     * `copy()`, copy data from cpu host side memories
     * specially, VBO has `mmap()` and `unmmap()`
 * output sink
-  * GL2, can only output to Rendering buffers, such as GL_FRONT or GL_BACK
-  * GL3 or later, can output ot Texture by FBO.  
+  * GL2, frag-shader can only output to Rendering buffers, such as GL_FRONT or GL_BACK
+  * GL3 or later, frag-shader can output to Texture by FBO.
+  * GL4.3 or later, compute-shader can output to Texture directly.
 
 # classes
 * GL2
